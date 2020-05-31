@@ -1,7 +1,9 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-input v-model="listQuery.title" placeholder="Title" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-input v-model="listQuery.mid" placeholder="mid" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-input v-model="listQuery.mname" placeholder="mname" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-input v-model="listQuery.standards" placeholder="standards" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
       <!--      <el-select v-model="listQuery.importance" placeholder="Imp" clearable style="width: 90px" class="filter-item">-->
       <!--        <el-option v-for="item in importanceOptions" :key="item" :label="item" :value="item" />-->
       <!--      </el-select>-->
@@ -14,15 +16,15 @@
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
         搜索
       </el-button>
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
-        添加
-      </el-button>
-      <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">
-        导出
-      </el-button>
-      <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-upload2" @click="handleDownload">
-        导入
-      </el-button>
+<!--      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">-->
+<!--        添加-->
+<!--      </el-button>-->
+<!--      <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">-->
+<!--        导出-->
+<!--      </el-button>-->
+<!--      <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-upload2" @click="handleDownload">-->
+<!--        导入-->
+<!--      </el-button>-->
     </div>
 
     <el-table
@@ -61,46 +63,17 @@
           <span style="color:red;">{{ row.reviewer }}</span>
         </template>
       </el-table-column>
-<!--      <el-table-column label="操作时间" width="135px" align="center">-->
-<!--        <template slot-scope="{row}">-->
-<!--          <span>{{ row.timestamp | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>-->
-<!--          &lt;!&ndash;          <svg-icon v-for="n in + row.importance" :key="n" icon-class="star" class="meta-item__icon" />&ndash;&gt;-->
-<!--        </template>-->
-<!--      </el-table-column>-->
       <el-table-column label="剩余数量" align="center" width="80">
         <template slot-scope="{row}">
           <span v-if="row.pageviews" class="link-type" @click="handleFetchPv(row.pageviews)">{{ row.pageviews }}</span>
           <span v-else>0</span>
         </template>
       </el-table-column>
-      <!--      <el-table-column label="供应商信息" class-name="status-col" width="100">-->
-      <!--        <template slot-scope="{row}">-->
-      <!--          <el-tag :type="row.status | statusFilter">-->
-      <!--            {{ row.status }}-->
-      <!--          </el-tag>-->
-      <!--        </template>-->
-      <!--      </el-table-column>-->
       <el-table-column label="预警值" class-name="status-col" width="100">
         <template slot-scope="{row}">
           <el-tag :type="row.status | statusFilter">
             {{ row.status }}
           </el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column label="操作" align="center" width="150" class-name="small-padding fixed-width">
-        <template slot-scope="{row,$index}">
-          <el-button type="primary" size="mini" @click="handleUpdate(row)">
-            编辑
-          </el-button>
-          <!--          <el-button v-if="row.status!='published'" size="mini" type="success" @click="handleModifyStatus(row,'published')">-->
-          <!--            Publish-->
-          <!--          </el-button>-->
-          <!--          <el-button v-if="row.status!='draft'" size="mini" @click="handleModifyStatus(row,'draft')">-->
-          <!--            Draft-->
-          <!--          </el-button>-->
-          <el-button v-if="row.status!='deleted'" size="mini" type="danger" @click="handleDelete(row,$index)">
-            删除
-          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -213,6 +186,10 @@
         total: 0,
         listLoading: true,
         listQuery: {
+          mid:undefined,
+          mname:undefined,
+          standards:undefined,
+
           page: 1,
           limit: 20,
           importance: undefined,

@@ -1,18 +1,18 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-input v-model="listQuery.number" clearable placeholder="订单号" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
-      <el-input v-model="listQuery.productName" clearable placeholder="产品名称" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
-      <el-input v-model="listQuery.userName" clearable placeholder="客户姓名" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
-      <el-date-picker v-model="listQuery.createDate" style="width: 300px;" class="filter-item"
-                          type="daterange" range-separator="至" start-placeholder="开始日期" value-format="YY-MM-dd hh-mm-ss"
-                          end-placeholder="结束日期" @keyup.enter.native="handleFilter" />
+<!--      <el-input v-model="listQuery.number" clearable placeholder="订单号" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />-->
+<!--      <el-input v-model="listQuery.productName" clearable placeholder="产品名称" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />-->
+<!--      <el-input v-model="listQuery.userName" clearable placeholder="客户姓名" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />-->
+<!--      <el-date-picker v-model="listQuery.createDate" style="width: 300px;" class="filter-item"-->
+<!--                      type="daterange" range-separator="至" start-placeholder="开始日期" value-format="YY-MM-dd hh-mm-ss"-->
+<!--                      end-placeholder="结束日期" @keyup.enter.native="handleFilter" />-->
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
-        搜索
+        审核记录
       </el-button>
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
-        添加
-      </el-button>
+<!--      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">-->
+<!--        审核-->
+<!--      </el-button>-->
 <!--      <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">-->
 <!--        导出-->
 <!--      </el-button>-->
@@ -88,11 +88,11 @@
       <el-table-column label="操作" align="center" width="150" class-name="small-padding fixed-width">
         <template slot-scope="{row,$index}">
           <el-button type="primary" size="mini" @click="handleUpdate(row)">
-            编辑
+            审核
           </el-button>
-          <el-button v-if="row.status!='deleted'" size="mini" type="danger" @click="handleDelete(row,$index)">
-            删除
-          </el-button>
+<!--          <el-button v-if="row.status!='deleted'" size="mini" type="danger" @click="handleDelete(row,$index)">-->
+<!--            删除-->
+<!--          </el-button>-->
         </template>
       </el-table-column>
     </el-table>
@@ -101,53 +101,53 @@
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="90px" style="width: 400px; margin-left:50px;">
-<!--        <el-form-item label="生产单号" prop="type">-->
+        <!--        <el-form-item label="生产单号" prop="type">-->
+        <!--          <el-input v-model="temp.type" :autosize="{ minRows: 2, maxRows: 4}"  placeholder="Please input" />-->
+        <!--        </el-form-item>-->
+        <el-form-item label="审核备注" prop="type">
+          <el-input v-model="temp.type" :autosize="{ minRows: 2, maxRows: 4}"  placeholder="Please input" />
+        </el-form-item>
+<!--        <el-form-item label="单位" prop="title">-->
+<!--          <el-input v-model="temp.title" :autosize="{ minRows: 2, maxRows: 4}"  placeholder="Please input" />-->
+<!--          &lt;!&ndash;          <el-input v-model="temp.title" />&ndash;&gt;-->
+<!--        </el-form-item>-->
+<!--        <el-form-item label="规格型号" prop="type">-->
 <!--          <el-input v-model="temp.type" :autosize="{ minRows: 2, maxRows: 4}"  placeholder="Please input" />-->
 <!--        </el-form-item>-->
-        <el-form-item label="产品名称" prop="type">
-          <el-input v-model="temp.type" :autosize="{ minRows: 2, maxRows: 4}"  placeholder="Please input" />
-        </el-form-item>
-        <el-form-item label="单位" prop="title">
-          <el-input v-model="temp.title" :autosize="{ minRows: 2, maxRows: 4}"  placeholder="Please input" />
-          <!--          <el-input v-model="temp.title" />-->
-        </el-form-item>
-        <el-form-item label="规格型号" prop="type">
-          <el-input v-model="temp.type" :autosize="{ minRows: 2, maxRows: 4}"  placeholder="Please input" />
-        </el-form-item>
-        <el-form-item label="单件人工" prop="timestamp">
-          <el-input v-model="temp.timestamp" :autosize="{ minRows: 2, maxRows: 4}"  placeholder="Please input" />
-          <!--          <el-date-picker v-model="temp.timestamp" type="datetime" placeholder="Please pick a date" />-->
-        </el-form-item>
-        <el-form-item label="客户商" prop="type">
-          <el-input v-model="temp.type" :autosize="{ minRows: 2, maxRows: 4}"  placeholder="Please input" />
-        </el-form-item>
-        <el-form-item label="总数量" prop="type">
-          <el-input v-model="temp.type" :autosize="{ minRows: 2, maxRows: 4}"  placeholder="Please input" />
-        </el-form-item>
-        <el-form-item label="已完工数量" prop="status">
-          <el-input v-model="temp.status" :autosize="{ minRows: 2, maxRows: 4}" type="number" placeholder="Please input">
-            <template slot="append">/元</template>
-          </el-input>
-          <!--          <el-select v-model="temp.status" class="filter-item" placeholder="Please select">-->
-          <!--            <el-option v-for="item in statusOptions" :key="item" :label="item" :value="item" />-->
-          <!--          </el-select>-->
-        </el-form-item>
-        <el-form-item label="已出库数量">
-          <el-date-picker v-model="temp.importance" type="datetime" placeholder="Please pick a date" />
-          <!--          <el-rate v-model="temp.importance" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :max="3" style="margin-top:8px;" />-->
-        </el-form-item>
-<!--        <el-form-item label="剩余数量" prop="importance">-->
-<!--          <el-input v-model="temp.importance" :autosize="{ minRows: 2, maxRows: 4}" type="number" placeholder="Please input">-->
-<!--            <template slot="append">/个</template>-->
-<!--          </el-input>-->
-          <!--          <el-rate v-model="temp.importance" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :max="3" style="margin-top:8px;" />-->
+<!--        <el-form-item label="单件人工" prop="timestamp">-->
+<!--          <el-input v-model="temp.timestamp" :autosize="{ minRows: 2, maxRows: 4}"  placeholder="Please input" />-->
+<!--          &lt;!&ndash;          <el-date-picker v-model="temp.timestamp" type="datetime" placeholder="Please pick a date" />&ndash;&gt;-->
 <!--        </el-form-item>-->
+<!--        <el-form-item label="客户商" prop="type">-->
+<!--          <el-input v-model="temp.type" :autosize="{ minRows: 2, maxRows: 4}"  placeholder="Please input" />-->
+<!--        </el-form-item>-->
+<!--        <el-form-item label="总数量" prop="type">-->
+<!--          <el-input v-model="temp.type" :autosize="{ minRows: 2, maxRows: 4}"  placeholder="Please input" />-->
+<!--        </el-form-item>-->
+<!--        <el-form-item label="已完工数量" prop="status">-->
+<!--          <el-input v-model="temp.status" :autosize="{ minRows: 2, maxRows: 4}" type="number" placeholder="Please input">-->
+<!--            <template slot="append">/元</template>-->
+<!--          </el-input>-->
+<!--          &lt;!&ndash;          <el-select v-model="temp.status" class="filter-item" placeholder="Please select">&ndash;&gt;-->
+<!--          &lt;!&ndash;            <el-option v-for="item in statusOptions" :key="item" :label="item" :value="item" />&ndash;&gt;-->
+<!--          &lt;!&ndash;          </el-select>&ndash;&gt;-->
+<!--        </el-form-item>-->
+<!--        <el-form-item label="已出库数量">-->
+<!--          <el-date-picker v-model="temp.importance" type="datetime" placeholder="Please pick a date" />-->
+<!--          &lt;!&ndash;          <el-rate v-model="temp.importance" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :max="3" style="margin-top:8px;" />&ndash;&gt;-->
+<!--        </el-form-item>-->
+        <!--        <el-form-item label="剩余数量" prop="importance">-->
+        <!--          <el-input v-model="temp.importance" :autosize="{ minRows: 2, maxRows: 4}" type="number" placeholder="Please input">-->
+        <!--            <template slot="append">/个</template>-->
+        <!--          </el-input>-->
+        <!--          <el-rate v-model="temp.importance" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :max="3" style="margin-top:8px;" />-->
+        <!--        </el-form-item>-->
         <!--        <el-form-item label="供应商信息">-->
         <!--          <el-input v-model="temp.remark" :autosize="{ minRows: 2, maxRows: 4}"  placeholder="Please input" />-->
         <!--        </el-form-item>-->
-<!--        <el-form-item label="预警值">-->
-<!--          <el-input v-model="temp.remark" :autosize="{ minRows: 2, maxRows: 4}"  placeholder="Please input" />-->
-<!--        </el-form-item>-->
+        <!--        <el-form-item label="预警值">-->
+        <!--          <el-input v-model="temp.remark" :autosize="{ minRows: 2, maxRows: 4}"  placeholder="Please input" />-->
+        <!--        </el-form-item>-->
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">

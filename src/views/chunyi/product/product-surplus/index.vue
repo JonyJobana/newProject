@@ -5,14 +5,14 @@
       <el-input v-model="listQuery.productName" clearable placeholder="产品名称" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
       <el-input v-model="listQuery.userName" clearable placeholder="客户姓名" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
       <el-date-picker v-model="listQuery.createDate" style="width: 300px;" class="filter-item"
-                          type="daterange" range-separator="至" start-placeholder="开始日期" value-format="YY-MM-dd hh-mm-ss"
-                          end-placeholder="结束日期" @keyup.enter.native="handleFilter" />
+                      type="daterange" range-separator="至" start-placeholder="开始日期" value-format="YY-MM-dd hh-mm-ss"
+                      end-placeholder="结束日期" @keyup.enter.native="handleFilter" />
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
         搜索
       </el-button>
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
-        添加
-      </el-button>
+<!--      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">-->
+<!--        添加-->
+<!--      </el-button>-->
 <!--      <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">-->
 <!--        导出-->
 <!--      </el-button>-->
@@ -32,9 +32,6 @@
       @sort-change="sortChange"
     >
       <el-table-column label="序号" type="index" sortable="custom" align="center" width="60" :class-name="getSortClass('id')">
-        <!--        <template slot-scope="{row}"> prop="id"-->
-        <!--          <span>{{ row.index }}</span>-->
-        <!--        </template>-->
       </el-table-column>
       <el-table-column label="生产单号" width="150px" align="center">
         <template slot-scope="{row}">
@@ -62,37 +59,26 @@
           <span style="color:red;">{{ row.reviewer }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="客户商" width="75px" align="center">
+      <el-table-column label="客户信息" width="75px" align="center">
         <template slot-scope="{row}">
           <span style="color:red;">{{ row.reviewer }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="总数量" align="center" width="80">
+      <el-table-column label="电话" width="75px" align="center">
+        <template slot-scope="{row}">
+          <span style="color:red;">{{ row.reviewer }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="出库数量" align="center" width="80">
         <template slot-scope="{row}">
           <span v-if="row.pageviews" class="link-type" @click="handleFetchPv(row.pageviews)">{{ row.pageviews }}</span>
           <span v-else>0</span>
         </template>
       </el-table-column>
-      <el-table-column label="已完工数量" align="center" width="80">
+      <el-table-column label="出库日期" align="center" width="80">
         <template slot-scope="{row}">
           <span v-if="row.pageviews" class="link-type" @click="handleFetchPv(row.pageviews)">{{ row.pageviews }}</span>
           <span v-else>0</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="已出库数量" align="center" width="80">
-        <template slot-scope="{row}">
-          <span v-if="row.pageviews" class="link-type" @click="handleFetchPv(row.pageviews)">{{ row.pageviews }}</span>
-          <span v-else>0</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="操作" align="center" width="150" class-name="small-padding fixed-width">
-        <template slot-scope="{row,$index}">
-          <el-button type="primary" size="mini" @click="handleUpdate(row)">
-            编辑
-          </el-button>
-          <el-button v-if="row.status!='deleted'" size="mini" type="danger" @click="handleDelete(row,$index)">
-            删除
-          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -101,9 +87,9 @@
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="90px" style="width: 400px; margin-left:50px;">
-<!--        <el-form-item label="生产单号" prop="type">-->
-<!--          <el-input v-model="temp.type" :autosize="{ minRows: 2, maxRows: 4}"  placeholder="Please input" />-->
-<!--        </el-form-item>-->
+        <!--        <el-form-item label="生产单号" prop="type">-->
+        <!--          <el-input v-model="temp.type" :autosize="{ minRows: 2, maxRows: 4}"  placeholder="Please input" />-->
+        <!--        </el-form-item>-->
         <el-form-item label="产品名称" prop="type">
           <el-input v-model="temp.type" :autosize="{ minRows: 2, maxRows: 4}"  placeholder="Please input" />
         </el-form-item>
@@ -118,36 +104,20 @@
           <el-input v-model="temp.timestamp" :autosize="{ minRows: 2, maxRows: 4}"  placeholder="Please input" />
           <!--          <el-date-picker v-model="temp.timestamp" type="datetime" placeholder="Please pick a date" />-->
         </el-form-item>
-        <el-form-item label="客户商" prop="type">
+        <el-form-item label="客户信息" prop="type">
           <el-input v-model="temp.type" :autosize="{ minRows: 2, maxRows: 4}"  placeholder="Please input" />
         </el-form-item>
-        <el-form-item label="总数量" prop="type">
+        <el-form-item label="电话" prop="type">
           <el-input v-model="temp.type" :autosize="{ minRows: 2, maxRows: 4}"  placeholder="Please input" />
         </el-form-item>
-        <el-form-item label="已完工数量" prop="status">
+        <el-form-item label="出库数量" prop="status">
           <el-input v-model="temp.status" :autosize="{ minRows: 2, maxRows: 4}" type="number" placeholder="Please input">
             <template slot="append">/元</template>
           </el-input>
-          <!--          <el-select v-model="temp.status" class="filter-item" placeholder="Please select">-->
-          <!--            <el-option v-for="item in statusOptions" :key="item" :label="item" :value="item" />-->
-          <!--          </el-select>-->
         </el-form-item>
-        <el-form-item label="已出库数量">
+        <el-form-item label="出库日期">
           <el-date-picker v-model="temp.importance" type="datetime" placeholder="Please pick a date" />
-          <!--          <el-rate v-model="temp.importance" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :max="3" style="margin-top:8px;" />-->
         </el-form-item>
-<!--        <el-form-item label="剩余数量" prop="importance">-->
-<!--          <el-input v-model="temp.importance" :autosize="{ minRows: 2, maxRows: 4}" type="number" placeholder="Please input">-->
-<!--            <template slot="append">/个</template>-->
-<!--          </el-input>-->
-          <!--          <el-rate v-model="temp.importance" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :max="3" style="margin-top:8px;" />-->
-<!--        </el-form-item>-->
-        <!--        <el-form-item label="供应商信息">-->
-        <!--          <el-input v-model="temp.remark" :autosize="{ minRows: 2, maxRows: 4}"  placeholder="Please input" />-->
-        <!--        </el-form-item>-->
-<!--        <el-form-item label="预警值">-->
-<!--          <el-input v-model="temp.remark" :autosize="{ minRows: 2, maxRows: 4}"  placeholder="Please input" />-->
-<!--        </el-form-item>-->
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">
@@ -319,7 +289,6 @@
         })
       },
       handleFilter() {
-        alert(this.listQuery)
         this.listQuery.page = 1
         this.getList()
       },

@@ -1,10 +1,10 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-input v-model="listQuery.title" placeholder="Title" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
-      <el-select v-model="listQuery.sort" style="width: 140px" class="filter-item" @change="handleFilter">
-        <el-option v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key" />
-      </el-select>
+      <el-input v-model="listQuery.userName" placeholder="用户名" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-date-picker v-model="listQuery.createDate" style="width: 300px;" class="filter-item"
+                      type="daterange" range-separator="至" start-placeholder="开始日期" value-format="YY-MM-dd hh-mm-ss"
+                      end-placeholder="结束日期" @keyup.enter.native="handleFilter" />
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
         搜索
       </el-button>
@@ -47,16 +47,6 @@
         </template>
       </el-table-column>
       <el-table-column label="操作时间" width="75px" align="center">
-        <template slot-scope="{row}">
-          <span style="color:red;">{{ row.reviewer }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="操作行为" width="75px" align="center">
-        <template slot-scope="{row}">
-          <span style="color:red;">{{ row.reviewer }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="IP" width="75px" align="center">
         <template slot-scope="{row}">
           <span style="color:red;">{{ row.reviewer }}</span>
         </template>
@@ -114,6 +104,9 @@
         total: 0,
         listLoading: true,
         listQuery: {
+          userName:undefined,
+          createDate:undefined,
+
           page: 1,
           limit: 20,
           importance: undefined,

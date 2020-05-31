@@ -1,24 +1,27 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-input v-model="listQuery.number" clearable placeholder="订单号" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
-      <el-input v-model="listQuery.productName" clearable placeholder="产品名称" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
-      <el-input v-model="listQuery.userName" clearable placeholder="客户姓名" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
-      <el-date-picker v-model="listQuery.createDate" style="width: 300px;" class="filter-item"
-                          type="daterange" range-separator="至" start-placeholder="开始日期" value-format="YY-MM-dd hh-mm-ss"
-                          end-placeholder="结束日期" @keyup.enter.native="handleFilter" />
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
-        搜索
-      </el-button>
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
-        添加
-      </el-button>
-<!--      <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">-->
-<!--        导出-->
+<!--      <el-input v-model="listQuery.orderNo" clearable placeholder="订单号" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />-->
+<!--      <el-select v-model="listQuery.materialType" clearable placeholder="材料类型" style="width: 140px" class="filter-item" @change="handleFilter">-->
+<!--        <el-option v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key" />-->
+<!--      </el-select>-->
+<!--      <el-input v-model="listQuery.mName" clearable placeholder="mName" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />-->
+<!--      <el-input v-model="listQuery.supplierName" clearable placeholder="供应商名称" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />-->
+<!--      <el-select v-model="listQuery.payState" clearable placeholder="材料类型" style="width: 140px" class="filter-item" @change="handleFilter">-->
+<!--        <el-option v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key" />-->
+<!--      </el-select>-->
+<!--      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">-->
+<!--        搜索-->
 <!--      </el-button>-->
-<!--      <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-upload2" @click="handleDownload">-->
-<!--        导入-->
+<!--      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">-->
+<!--        添加-->
 <!--      </el-button>-->
+      <!--      <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">-->
+      <!--        导出-->
+      <!--      </el-button>-->
+      <!--      <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-upload2" @click="handleDownload">-->
+      <!--        导入-->
+      <!--      </el-button>-->
     </div>
 
     <el-table
@@ -85,25 +88,25 @@
           <span v-else>0</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" width="150" class-name="small-padding fixed-width">
-        <template slot-scope="{row,$index}">
-          <el-button type="primary" size="mini" @click="handleUpdate(row)">
-            编辑
-          </el-button>
-          <el-button v-if="row.status!='deleted'" size="mini" type="danger" @click="handleDelete(row,$index)">
-            删除
-          </el-button>
-        </template>
-      </el-table-column>
+      <!--      <el-table-column label="操作" align="center" width="150" class-name="small-padding fixed-width">-->
+      <!--        <template slot-scope="{row,$index}">-->
+      <!--          <el-button type="primary" size="mini" @click="handleUpdate(row)">-->
+      <!--            编辑-->
+      <!--          </el-button>-->
+      <!--          <el-button v-if="row.status!='deleted'" size="mini" type="danger" @click="handleDelete(row,$index)">-->
+      <!--            删除-->
+      <!--          </el-button>-->
+      <!--        </template>-->
+      <!--      </el-table-column>-->
     </el-table>
 
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="90px" style="width: 400px; margin-left:50px;">
-<!--        <el-form-item label="生产单号" prop="type">-->
-<!--          <el-input v-model="temp.type" :autosize="{ minRows: 2, maxRows: 4}"  placeholder="Please input" />-->
-<!--        </el-form-item>-->
+        <!--        <el-form-item label="生产单号" prop="type">-->
+        <!--          <el-input v-model="temp.type" :autosize="{ minRows: 2, maxRows: 4}"  placeholder="Please input" />-->
+        <!--        </el-form-item>-->
         <el-form-item label="产品名称" prop="type">
           <el-input v-model="temp.type" :autosize="{ minRows: 2, maxRows: 4}"  placeholder="Please input" />
         </el-form-item>
@@ -136,18 +139,18 @@
           <el-date-picker v-model="temp.importance" type="datetime" placeholder="Please pick a date" />
           <!--          <el-rate v-model="temp.importance" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :max="3" style="margin-top:8px;" />-->
         </el-form-item>
-<!--        <el-form-item label="剩余数量" prop="importance">-->
-<!--          <el-input v-model="temp.importance" :autosize="{ minRows: 2, maxRows: 4}" type="number" placeholder="Please input">-->
-<!--            <template slot="append">/个</template>-->
-<!--          </el-input>-->
-          <!--          <el-rate v-model="temp.importance" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :max="3" style="margin-top:8px;" />-->
-<!--        </el-form-item>-->
+        <!--        <el-form-item label="剩余数量" prop="importance">-->
+        <!--          <el-input v-model="temp.importance" :autosize="{ minRows: 2, maxRows: 4}" type="number" placeholder="Please input">-->
+        <!--            <template slot="append">/个</template>-->
+        <!--          </el-input>-->
+        <!--          <el-rate v-model="temp.importance" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :max="3" style="margin-top:8px;" />-->
+        <!--        </el-form-item>-->
         <!--        <el-form-item label="供应商信息">-->
         <!--          <el-input v-model="temp.remark" :autosize="{ minRows: 2, maxRows: 4}"  placeholder="Please input" />-->
         <!--        </el-form-item>-->
-<!--        <el-form-item label="预警值">-->
-<!--          <el-input v-model="temp.remark" :autosize="{ minRows: 2, maxRows: 4}"  placeholder="Please input" />-->
-<!--        </el-form-item>-->
+        <!--        <el-form-item label="预警值">-->
+        <!--          <el-input v-model="temp.remark" :autosize="{ minRows: 2, maxRows: 4}"  placeholder="Please input" />-->
+        <!--        </el-form-item>-->
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">
@@ -214,12 +217,12 @@
         total: 0,
         listLoading: true,
         listQuery: {
-          number: undefined,
-          userName: undefined,
-          productName: undefined,
-          createDate: undefined,
-          startDate: undefined,
-          endDate: undefined,
+          orderNo: undefined,
+          materialType: undefined,
+          mName: undefined,
+          supplierName: undefined,
+          payState: undefined,
+          date: undefined,
           pageSize: 1,
           pageNumber: 1,
 
